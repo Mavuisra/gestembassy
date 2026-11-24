@@ -98,6 +98,16 @@ export function Footer() {
  {t("nav.invest")}
  </Link>
  </li>
+ <li>
+ <Link to="/tourisme" className="hover:text-white">
+ {t("nav.tourism")}
+ </Link>
+ </li>
+ <li>
+ <Link to="/bourses" className="hover:text-white">
+ {t("nav.scholarships")}
+ </Link>
+ </li>
  </ul>
  </div>
 

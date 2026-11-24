@@ -13,6 +13,8 @@ const navItems = [
  { to: "/services", key: "services" },
  { to: "/visas", key: "visas" },
  { to: "/investir", key: "invest" },
+ { to: "/tourisme", key: "tourism" },
+ { to: "/bourses", key: "scholarships" },
  { to: "/actualites", key: "news" },
  { to: "/assistance", key: "assistance" },
  { to: "/contact", key: "contact" },

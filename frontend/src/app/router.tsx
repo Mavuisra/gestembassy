@@ -39,9 +39,11 @@ import { NewsPage } from "../pages/public/NewsPage";
 import { CivilStatusPage } from "../pages/public/CivilStatusPage";
 import { ConsularRegistrationPage } from "../pages/public/ConsularRegistrationPage";
 import { PassportPage } from "../pages/public/PassportPage";
+import { ScholarshipsPage } from "../pages/public/ScholarshipsPage";
 import { ServiceDetailPage } from "../pages/public/ServiceDetailPage";
 import { ServicesPage } from "../pages/public/ServicesPage";
 import { NotFoundPage } from "../pages/public/NotFoundPage";
+import { TourismPage } from "../pages/public/TourismPage";
 import { VisasPage } from "../pages/public/VisasPage";
 
 export function AppRouter() {
@@ -77,6 +79,8 @@ export function AppRouter() {
  <Route path="actualites" element={<NewsPage />} />
  <Route path="actualites/:slug" element={<NewsDetailPage />} />
  <Route path="investir" element={<InvestPage />} />
+ <Route path="tourisme" element={<TourismPage />} />
+ <Route path="bourses" element={<ScholarshipsPage />} />
  <Route path="assistance" element={<AssistancePage />} />
  <Route path="faq" element={<FaqPage />} />
  <Route path="contact" element={<ContactPage />} />

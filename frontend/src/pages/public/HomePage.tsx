@@ -194,21 +194,40 @@ export function HomePage() {
  </div>
  </section>
 
- {/* INVESTIR / OPPORTUNITÉS */}
+ {/* INVESTIR / TOURISME / BOURSES — Module 7 */}
  <section className="bg-white py-16 md:py-24">
- <div className="container-page max-w-3xl">
+ <div className="container-page">
  <Reveal>
- <h2 className="text-3xl font-black leading-tight text-navy md:text-5xl">
+ <h2 className="max-w-3xl text-3xl font-black leading-tight text-navy md:text-5xl">
  {t("home.oppTitle")}
  <span className="text-gold"> {t("home.oppSubtitle")}</span>
  </h2>
  <p className="mt-6 max-w-2xl text-base leading-relaxed text-muted md:text-lg">
- {t("home.aboutBody")}
+ {t("home.oppIntro")}
  </p>
- <Link to="/investir" className="btn-navy mt-8">
- {t("home.opp.invest")} <ArrowUpRight size={16} />
+ </Reveal>
+ <div className="mt-10 grid gap-4 md:grid-cols-3">
+ {(
+ [
+ { to: "/investir", label: t("home.opp.invest") },
+ { to: "/tourisme", label: t("home.opp.discover") },
+ { to: "/bourses", label: t("home.opp.univ") },
+ ] as const
+ ).map((item, idx) => (
+ <Reveal key={item.to} delay={(idx + 1) as 1 | 2 | 3}>
+ <Link
+ to={item.to}
+ className="group flex h-full flex-col border border-line border-l-4 border-l-gold bg-[rgba(74,143,212,0.04)] p-6 transition hover:bg-[rgba(74,143,212,0.08)]"
+ >
+ <span className="text-lg font-extrabold text-navy">{item.label}</span>
+ <span className="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-navy">
+ {t("common.learnMore")}{" "}
+ <ArrowUpRight size={16} className="transition group-hover:translate-x-0.5" />
+ </span>
  </Link>
  </Reveal>
+ ))}
+ </div>
  </div>
  </section>
 
