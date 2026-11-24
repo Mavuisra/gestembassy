@@ -34,16 +34,15 @@ cd gestembassy
 
 ## 2. Backend (API Django)
 
-### Étape A — Environnement Python
+### Étape A — Créer l’environnement Python
 
-Depuis la **racine** du projet :
+Depuis la **racine** du projet (`gestembassy`) :
 
 **Windows (PowerShell)**
 
 ```powershell
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
-pip install -r backend\requirements.txt
 ```
 
 **macOS / Linux**
@@ -51,21 +50,45 @@ pip install -r backend\requirements.txt
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
+```
+
+Quand le venv est actif, tu vois `(.venv)` au début de la ligne de commande.
+
+### Étape B — Installation des dépendances (backend)
+
+Toujours avec le venv **activé**, depuis la racine du projet :
+
+**Windows**
+
+```powershell
+python -m pip install --upgrade pip
+pip install -r backend\requirements.txt
+```
+
+**macOS / Linux**
+
+```bash
+python -m pip install --upgrade pip
 pip install -r backend/requirements.txt
 ```
 
-### Étape B — Fichier de config
+Cette commande installe Django, Django REST Framework, et tout le reste listé dans `backend/requirements.txt`.  
+La première fois, ça peut prendre 1 à 3 minutes.
+
+Si tu refermes le terminal plus tard, réactive d’abord le venv (`Activate.ps1` ou `source …`) avant de relancer `pip` ou `manage.py`.
+
+### Étape C — Fichier de config
 
 ```bash
 cd backend
-copy .env.example .env
 ```
 
-Sur macOS/Linux : `cp .env.example .env`
+**Windows :** `copy .env.example .env`  
+**macOS / Linux :** `cp .env.example .env`
 
 Pour le développement local, le fichier d’exemple suffit (SQLite, pas besoin de Postgres).
 
-### Étape C — Base de données + données de démo
+### Étape D — Base de données + données de démo
 
 Toujours dans `backend`, avec le venv activé :
 
@@ -79,7 +102,7 @@ python manage.py seed_staff
 - `seed_public_content` charge actualités, FAQ, services…  
 - `seed_staff` crée un compte agent pour le back-office  
 
-### Étape D — Lancer l’API
+### Étape E — Lancer l’API
 
 ```bash
 python manage.py runserver
@@ -106,12 +129,17 @@ Laisse cette fenêtre ouverte. L’API tourne sur :
 
 Ouvre un **deuxième** terminal (laisse le backend tourner).
 
-### Étape A — Installer les dépendances
+### Étape A — Installation des dépendances (frontend)
 
 ```bash
 cd frontend
 npm install
 ```
+
+Cette commande lit `package.json` / `package-lock.json` et installe React, Vite, Tailwind, etc. dans `frontend/node_modules`.  
+La première fois, ça peut prendre 1 à 3 minutes.
+
+Tu n’as pas besoin de refaire `npm install` à chaque lancement — seulement après un `git pull` si les dépendances ont changé, ou si tu supprimes `node_modules`.
 
 ### Étape B — Lancer le site
 
@@ -130,6 +158,17 @@ Le navigateur : **http://127.0.0.1:5173/**
 | Bourses | http://127.0.0.1:5173/bourses |
 
 En local, le front appelle déjà l’API sur `http://127.0.0.1:8000` (proxy Vite). Pas besoin de fichier `.env` pour démarrer.
+
+---
+
+## Récap — installation des dépendances
+
+| Côté | Dossier / contexte | Commande |
+|------|--------------------|----------|
+| Backend | Racine + venv activé | `pip install -r backend/requirements.txt` |
+| Frontend | `frontend/` | `npm install` |
+
+Sans ces deux commandes, ni l’API ni le site ne pourront démarrer.
 
 ---
 
@@ -169,6 +208,8 @@ npm run preview   # prévisualiser le build
 |----------|-----------|
 | `python` introuvable | Installe Python 3.12 et coche « Add to PATH » |
 | Erreur d’activation du venv (Windows) | `Set-ExecutionPolicy -Scope CurrentUser RemoteSigned` puis réessaie |
+| `pip install` échoue / lent | Vérifie Internet, puis `python -m pip install --upgrade pip` et réessaie |
+| `npm install` échoue | Vérifie Node (`node -v`), supprime `node_modules` et `package-lock.json` seulement si besoin, puis `npm install` |
 | Frontend sans données / erreurs réseau | Vérifie que le backend tourne bien sur le port 8000 |
 | Port 8000 ou 5173 déjà pris | Ferme l’autre programme, ou lance `runserver 8001` / change le port Vite |
 | Tables manquantes / erreurs DB | Refais `migrate` puis les deux `seed_*` |
@@ -188,4 +229,4 @@ Pour mettre en ligne (API sur Render, site sur Netlify) :
 - **Frontend :** React + TypeScript + Vite + Tailwind  
 - **Base locale :** SQLite (aucun serveur SQL à installer pour commencer)
 
-Bon courage — en cas de blocage, vérifie d’abord que les deux serveurs (8000 et 5173) tournent en même temps.
+Bon courage — en cas de blocage, vérifie d’abord que les dépendances sont installées (`pip` + `npm`) et que les deux serveurs (8000 et 5173) tournent en même temps.
