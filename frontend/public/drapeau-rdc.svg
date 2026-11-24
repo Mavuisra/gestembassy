@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" role="img" aria-label="Drapeau de la République démocratique du Congo">
+  <rect width="900" height="600" fill="#007FFF"/>
+  <path d="M0 600 L900 0 L900 120 L120 600 Z" fill="#CE1126"/>
+  <path d="M0 600 L900 0 L900 55 L55 600 Z" fill="#F7D618"/>
+  <path d="M900 120 L900 175 L175 600 L120 600 Z" fill="#F7D618"/>
+  <polygon fill="#F7D618" points="150,90 163,130 205,130 171,155 184,195 150,170 116,195 129,155 95,130 137,130"/>
+</svg>

@@ -1,0 +1,1426 @@
+# DOCUMENT DIRECTEUR DE CONCEPTION ET DE DÉVELOPPEMENT
+
+## PROJET : PLATEFORME NUMÉRIQUE OFFICIELLE DE L'AMBASSADE DE LA RÉPUBLIQUE DÉMOCRATIQUE DU CONGO EN RÉPUBLIQUE DE CORÉE
+
+**Nature du projet :** Plateforme institutionnelle, diplomatique et consulaire.
+
+**Type de solution :** Application web complète avec portail public, espace usager et système d'administration (Back-office).
+
+**Langues :** Français, Coréen et Anglais.
+
+**Objectif général :** Modernisation, digitalisation et centralisation des services institutionnels et consulaires de l'Ambassade.
+
+---
+
+# PARTIE 1 — TON RÔLE ET TON NIVEAU D'EXIGENCE
+
+Tu interviens en qualité d'une équipe multidisciplinaire d'ingénierie logicielle chargée de concevoir et de développer une plateforme numérique institutionnelle destinée à l'Ambassade de la République démocratique du Congo en République de Corée.
+
+Tu dois adopter simultanément les responsabilités suivantes :
+
+1. Architecte logiciel senior.
+2. Architecte de solutions web.
+3. Développeur Frontend senior.
+4. Développeur Backend senior.
+5. Expert en conception de bases de données.
+6. Expert UI/UX et design institutionnel.
+7. Ingénieur en cybersécurité.
+8. Ingénieur DevOps.
+9. Expert en digitalisation des administrations publiques.
+10. Expert en conception de systèmes d'information et de gestion documentaire.
+11. Ingénieur QA et automatisation des tests.
+
+Tu ne dois pas te comporter comme un générateur de code qui produit rapidement des pages sans cohérence architecturale.
+
+Tu dois raisonner comme une équipe professionnelle qui prépare une solution destinée à être utilisée quotidiennement par une représentation diplomatique.
+
+Le résultat attendu n'est pas un simple site vitrine.
+
+Il s'agit d'un véritable système d'information consulaire et institutionnel.
+
+La plateforme doit permettre :
+- Aux visiteurs de consulter les informations officielles.
+- Aux voyageurs de préparer leurs demandes de visa.
+- Aux ressortissants congolais de réaliser certaines démarches consulaires.
+- Aux usagers de prendre des rendez-vous.
+- Aux demandeurs de suivre leurs dossiers.
+- Aux personnes en difficulté de solliciter une assistance.
+- Aux agents de l'Ambassade de gérer les demandes.
+- Aux administrateurs de gérer les utilisateurs et les contenus.
+- Aux responsables de consulter les statistiques et les activités.
+
+Tu dois privilégier la qualité architecturale, la sécurité, la maintenabilité, l'expérience utilisateur et la fiabilité.
+
+---
+
+# PARTIE 2 — RÈGLES FONDAMENTALES DE TRAVAIL
+
+Ces règles sont obligatoires pendant toute la réalisation.
+
+## 2.1. Développement progressif
+
+Tu ne dois jamais essayer de construire toute l'application en une seule réponse ou en une seule opération.
+
+Le projet doit être découpé en phases cohérentes.
+
+Chaque phase doit être analysée, conçue, développée, testée et validée avant de passer à la suivante.
+
+Tu dois respecter cet ordre :
+
+1. Analyse du besoin.
+2. Architecture générale.
+3. Conception UX/UI.
+4. Conception de la base de données.
+5. Mise en place du socle technique.
+6. Développement des fonctionnalités.
+7. Intégration des différents modules.
+8. Tests.
+9. Sécurisation.
+10. Préparation au déploiement.
+
+Tu dois attendre ma validation explicite avant de passer à une nouvelle phase majeure.
+
+## 2.2. Ne jamais inventer les informations institutionnelles
+
+Tu ne dois pas inventer :
+- Les coordonnées officielles de l'Ambassade.
+- Les noms des diplomates.
+- Les tarifs consulaires.
+- Les délais officiels de traitement.
+- Les conditions réglementaires d'obtention des visas.
+- Les documents officiellement exigés.
+- Les procédures administratives non communiquées.
+- Les horaires officiels.
+
+Lorsque ces informations ne sont pas disponibles, utilise des données provisoires clairement identifiées comme telles.
+
+Prévois un système permettant aux administrateurs de les renseigner ultérieurement.
+
+## 2.3. Respecter les exigences fonctionnelles
+
+Chaque fonctionnalité doit avoir :
+- Un objectif précis.
+- Des utilisateurs concernés.
+- Des règles métier.
+- Des données nécessaires.
+- Des actions possibles.
+- Des conditions de validation.
+- Des états possibles.
+- Des messages de confirmation ou d'erreur.
+
+Ne développe pas une fonctionnalité uniquement pour donner l'impression que le système est complet.
+
+Elle doit réellement fonctionner.
+
+## 2.4. Qualité du code
+
+Le code doit respecter les bonnes pratiques de développement.
+
+Exigences :
+- Architecture modulaire.
+- Séparation des responsabilités.
+- Réutilisation des composants.
+- Gestion centralisée des erreurs.
+- Validation des données.
+- Gestion des permissions.
+- Documentation technique.
+- Tests automatisés.
+- Absence de duplication inutile.
+- Respect des conventions de nommage.
+- Configuration des environnements.
+- Gestion sécurisée des secrets.
+
+Évite les fichiers excessivement volumineux et les composants qui mélangent plusieurs responsabilités.
+
+## 2.5. Ne jamais simuler une fonctionnalité comme si elle était opérationnelle
+
+Si un service externe n'est pas configuré, indique-le clairement.
+
+Exemples :
+- Envoi de SMS.
+- Envoi d'e-mails.
+- Génération de QR Codes.
+- Connexion au système GestionAmbassa.
+- Paiement éventuel.
+- Services externes de cartographie.
+
+Tu peux développer les interfaces et les mécanismes d'intégration, mais tu dois distinguer :
+- Fonctionnalité réellement opérationnelle.
+- Fonctionnalité développée mais non configurée.
+- Fonctionnalité nécessitant une intégration externe.
+- Fonctionnalité en attente de validation institutionnelle.
+
+---
+
+# PARTIE 3 — DESCRIPTION GÉNÉRALE DE LA PLATEFORME
+
+La plateforme doit être organisée autour de trois espaces principaux.
+
+## ESPACE A : PORTAIL PUBLIC
+
+Accessible sans authentification.
+
+Il permet de :
+- Découvrir l'Ambassade.
+- Consulter les informations diplomatiques.
+- Consulter les services consulaires.
+- Préparer les démarches.
+- Accéder aux formulaires.
+- Consulter les actualités.
+- Prendre connaissance des opportunités économiques.
+- Contacter les services.
+
+## ESPACE B : ESPACE USAGER
+
+Accessible après authentification, lorsque la démarche nécessite un compte.
+
+Il permet de :
+- Gérer son profil.
+- Effectuer des pré-demandes.
+- Transmettre des documents.
+- Prendre des rendez-vous.
+- Consulter ses demandes.
+- Suivre ses dossiers.
+- Recevoir des notifications.
+- Télécharger les documents disponibles.
+
+Certaines fonctionnalités de consultation publique, notamment les informations générales, doivent rester accessibles sans inscription.
+
+## ESPACE C : BACK-OFFICE ADMINISTRATIF
+
+Réservé au personnel autorisé.
+
+Il permet de :
+- Gérer les demandes.
+- Traiter les dossiers.
+- Organiser les rendez-vous.
+- Gérer les usagers.
+- Administrer les contenus.
+- Gérer les urgences.
+- Gérer les tarifs.
+- Consulter les statistiques.
+- Administrer les permissions.
+
+Ces trois espaces doivent être cohérents et partager une architecture technique commune.
+
+---
+
+# PARTIE 4 — CAHIER DES CHARGES FONCTIONNEL DÉTAILLÉ
+
+# MODULE 1 : EXPÉRIENCE UTILISATEUR ET MULTILINGUISME
+
+## 1.1. Interface trilingue
+
+La plateforme doit prendre en charge :
+- Français.
+- Anglais.
+- Coréen.
+
+Fonctionnalités :
+- Sélecteur de langue visible.
+- Traduction des menus.
+- Traduction des formulaires.
+- Traduction des messages d'erreur.
+- Traduction des notifications.
+- Traduction des pages institutionnelles.
+- Gestion des contenus multilingues depuis le Back-office.
+
+Le coréen doit être correctement affiché avec les caractères Hangul.
+
+Ne te contente pas de traduire les menus. L'ensemble des parcours utilisateurs doit être multilingue.
+
+Prévois une gestion propre des contenus traduits, sans duplication désorganisée des pages.
+
+## 1.2. Design responsive
+
+La plateforme doit fonctionner sur :
+- Ordinateurs.
+- Tablettes.
+- Smartphones.
+
+Approche Mobile First.
+
+Le design doit être institutionnel, moderne, sobre et élégant.
+
+Respecter l'identité visuelle officielle de la RDC.
+
+Éléments à prévoir :
+- Drapeau de la RDC.
+- Armoiries officielles.
+- Couleurs institutionnelles.
+- Typographie professionnelle.
+- Hiérarchie visuelle claire.
+
+Évite les animations excessives, les effets décoratifs inutiles et les interfaces surchargées.
+
+## 1.3. Recherche intelligente
+
+Créer un moteur de recherche global.
+
+L'utilisateur doit pouvoir rechercher :
+- Une procédure consulaire.
+- Un tarif.
+- Un formulaire.
+- Une actualité.
+- Une information institutionnelle.
+- Une procédure de visa.
+
+Prévoir :
+- Suggestions de recherche.
+- Résultats catégorisés.
+- Recherche par mots-clés.
+- Gestion des contenus multilingues.
+
+## 1.4. FAQ dynamique
+
+Créer une FAQ organisée par catégories :
+
+- Visas.
+- Passeports.
+- Carte consulaire.
+- État civil.
+- Rendez-vous.
+- Assistance.
+- Investissement.
+- Coopération universitaire.
+
+Les administrateurs doivent pouvoir ajouter, modifier, supprimer et traduire les questions et réponses.
+
+---
+
+# MODULE 2 : SERVICES CONSULAIRES
+
+Ce module constitue le cœur fonctionnel de la plateforme.
+
+Il doit être conçu comme un système modulaire permettant d'ajouter de nouvelles procédures administratives.
+
+## 2.1. Gestion des visas
+
+Créer une rubrique complète consacrée aux visas pour les voyageurs souhaitant se rendre en RDC.
+
+### Catégories de visas
+
+Prévoir les catégories suivantes :
+- Visa touristique.
+- Visa d'affaires.
+- Visa diplomatique.
+- Visa officiel.
+- Visa de travail.
+- Visa de transit.
+- Visa de court séjour.
+- Visa de long séjour.
+
+Les catégories, leurs conditions et leurs documents exigés doivent être administrables.
+
+### Présentation des conditions
+
+Pour chaque catégorie, afficher :
+- Description.
+- Conditions d'éligibilité.
+- Documents nécessaires.
+- Tarifs.
+- Délais indicatifs.
+- Durée de validité.
+- Instructions particulières.
+
+Les informations réglementaires définitives doivent être validées par l'Ambassade.
+
+### Pré-demande de visa
+
+Développer un formulaire dynamique.
+
+Étapes :
+
+1. Sélection du type de visa.
+2. Informations personnelles.
+3. Informations relatives au passeport.
+4. Informations sur le voyage.
+5. Informations sur l'hébergement.
+6. Téléversement des pièces justificatives.
+7. Vérification des informations.
+8. Acceptation des conditions.
+9. Soumission.
+10. Génération d'un numéro de référence.
+
+Documents pouvant être téléversés :
+- Passeport.
+- Photo d'identité.
+- Lettre d'invitation.
+- Billet d'avion.
+- Certificat de vaccination contre la fièvre jaune.
+
+Le système doit :
+- Vérifier les formats autorisés.
+- Contrôler la taille des fichiers.
+- Vérifier la présence des pièces obligatoires.
+- Empêcher les soumissions incomplètes.
+- Stocker les documents de manière sécurisée.
+- Associer les documents à leur demande.
+
+La plateforme doit parler de pré-demande et non de délivrance automatique du visa.
+
+La décision finale appartient aux autorités compétentes.
+
+## 2.2. Enregistrement consulaire
+
+Créer un module permettant aux Congolais résidant en Corée du Sud de s'enregistrer auprès de l'Ambassade.
+
+Fonctionnalités :
+- Formulaire d'immatriculation.
+- Informations personnelles.
+- Coordonnées.
+- Adresse de résidence.
+- Situation professionnelle ou académique.
+- Informations familiales lorsque nécessaires.
+- Téléversement des justificatifs.
+- Soumission de la demande.
+- Numéro de référence.
+- Validation par un agent.
+- Gestion des modifications.
+- Historique de l'enregistrement.
+
+Prévoir une gestion confidentielle des informations personnelles.
+
+## 2.3. Documents d'identité et de voyage
+
+Développer les procédures suivantes :
+
+- Demande ou renouvellement de passeport biométrique.
+- Demande de laissez-passer.
+- Déclaration de perte de passeport.
+
+Pour chaque procédure :
+- Présentation des conditions.
+- Liste des documents.
+- Formulaire de demande.
+- Téléversement des justificatifs.
+- Soumission.
+- Suivi du traitement.
+- Notifications.
+
+Ne pas inventer les procédures officielles ni prétendre générer un passeport biométrique depuis la plateforme.
+
+## 2.4. État civil et actes administratifs
+
+Créer des sous-modules pour :
+
+- Transcription d'acte de naissance.
+- Transcription d'acte de mariage.
+- Déclaration ou transcription de décès.
+- Certificat de célibat.
+- Certificat de coutume.
+- Procuration.
+- Légalisation de documents.
+- Authentification de documents officiels.
+
+Chaque procédure doit disposer de son propre formulaire et de ses propres règles de validation.
+
+Les documents téléversés doivent être associés à la demande correspondante.
+
+Prévoir une configuration administrative des pièces exigées.
+
+## 2.5. Bibliothèque documentaire
+
+Créer une bibliothèque permettant de télécharger :
+- Formulaires officiels PDF.
+- Modèles de lettres.
+- Autorisations parentales.
+- Attestations d'hébergement.
+- Documents administratifs disponibles.
+
+Fonctionnalités :
+- Classement par catégorie.
+- Recherche.
+- Téléchargement.
+- Version du document.
+- Date de publication.
+- Gestion depuis le Back-office.
+
+---
+
+# MODULE 3 : RENDEZ-VOUS CONSULAIRES
+
+Créer un véritable système de réservation.
+
+## 3.1. Interface publique
+
+L'utilisateur doit pouvoir :
+
+1. Sélectionner le service.
+2. Sélectionner le motif.
+3. Choisir une date.
+4. Consulter les créneaux disponibles.
+5. Sélectionner un horaire.
+6. Remplir ses informations.
+7. Confirmer la réservation.
+
+## 3.2. Gestion du calendrier
+
+Prévoir :
+- Calendrier interactif.
+- Gestion des disponibilités.
+- Gestion des jours fériés congolais.
+- Gestion des jours fériés coréens.
+- Gestion des horaires d'ouverture.
+- Configuration des créneaux.
+- Capacité maximale par créneau.
+- Gestion des absences des agents.
+- Blocage manuel de certaines dates.
+
+Le système doit empêcher les doubles réservations et gérer les conflits de disponibilité.
+
+## 3.3. Confirmation
+
+Après réservation :
+- Générer une confirmation.
+- Produire une convocation PDF.
+- Générer un QR Code unique.
+- Envoyer un e-mail.
+- Prévoir l'intégration SMS.
+- Envoyer des rappels.
+
+## 3.4. Administration
+
+Les agents doivent pouvoir :
+- Consulter les rendez-vous.
+- Filtrer par date.
+- Filtrer par service.
+- Consulter les informations du demandeur.
+- Confirmer un rendez-vous.
+- Annuler un rendez-vous.
+- Modifier un rendez-vous.
+- Consulter les convocations.
+- Vérifier un QR Code.
+
+---
+
+# MODULE 4 : SUIVI DES DOSSIERS
+
+Créer un système de tracking centralisé.
+
+Chaque demande doit posséder :
+- Un identifiant unique.
+- Un numéro de référence.
+- Un type de procédure.
+- Un demandeur.
+- Une date de soumission.
+- Un statut.
+- Un historique.
+- Un agent responsable, si attribué.
+
+## 4.1. Statuts
+
+Prévoir les statuts suivants :
+
+- Brouillon.
+- Soumis.
+- Reçu.
+- En cours d'instruction.
+- Documents manquants.
+- En attente de validation.
+- Approuvé.
+- Refusé.
+- Prêt pour retrait.
+- Clôturé.
+
+Les transitions entre statuts doivent être contrôlées.
+
+Un dossier ne doit pas pouvoir passer arbitrairement d'un statut à un autre.
+
+## 4.2. Interface usager
+
+L'usager peut :
+- Saisir son numéro de référence.
+- Effectuer une vérification d'identité sécurisée.
+- Consulter le statut.
+- Consulter les étapes du traitement.
+- Voir les observations qui lui sont destinées.
+- Recevoir des notifications.
+
+## 4.3. Interface agent
+
+L'agent peut :
+- Rechercher un dossier.
+- Consulter les pièces.
+- Vérifier les informations.
+- Ajouter une observation.
+- Demander des documents complémentaires.
+- Changer le statut selon ses permissions.
+- Affecter le dossier à un autre agent.
+- Consulter l'historique.
+
+Chaque modification doit être enregistrée dans un journal d'audit.
+
+---
+
+# MODULE 5 : ASSISTANCE CONSULAIRE ET URGENCES
+
+Créer un système spécifique de gestion des situations urgentes.
+
+## 5.1. Interface publique
+
+Prévoir :
+- Numéro d'urgence visible.
+- Bouton d'appel.
+- Formulaire de signalement.
+- Demande d'assistance juridique.
+- Demande d'assistance sociale.
+- Signalement d'arrestation.
+- Signalement d'hospitalisation.
+- Signalement de perte de passeport.
+- Signalement de décès.
+
+## 5.2. Formulaire de signalement
+
+Champs :
+- Identité du déclarant.
+- Identité de la personne concernée.
+- Coordonnées.
+- Nature de l'incident.
+- Localisation.
+- Description.
+- Niveau d'urgence.
+- Documents justificatifs éventuels.
+
+## 5.3. Back-office
+
+Créer une interface de gestion des incidents.
+
+Fonctionnalités :
+- Liste des signalements.
+- Filtrage par urgence.
+- Classification.
+- Attribution aux agents.
+- Historique des interventions.
+- Ajout de commentaires internes.
+- Suivi de résolution.
+- Clôture du dossier.
+
+Les informations liées aux urgences doivent être particulièrement protégées.
+
+## 5.4. Guide pratique de vie en Corée
+
+Créer une rubrique destinée aux nouveaux arrivants.
+
+Contenus :
+- Formalités d'immigration.
+- Informations sur la santé.
+- Informations pratiques.
+- Associations communautaires reconnues.
+- Informations destinées aux étudiants.
+- Contacts utiles.
+
+---
+
+# MODULE 6 : INFORMATIONS INSTITUTIONNELLES ET DIPLOMATIQUES
+
+Créer les rubriques institutionnelles suivantes :
+
+## 6.1. Présentation de l'Ambassade
+
+- Message de bienvenue.
+- Biographie de l'Ambassadeur.
+- Présentation de la mission diplomatique.
+- Historique de l'Ambassade.
+- Missions et responsabilités.
+
+## 6.2. Organigramme
+
+Présenter :
+- Chancellerie.
+- Section consulaire.
+- Section économique et commerciale.
+- Section culturelle et académique.
+
+Prévoir une interface administrable pour modifier les responsables et les services.
+
+## 6.3. Relations bilatérales RDC–Corée
+
+- Historique diplomatique.
+- Accords de coopération.
+- Visites officielles.
+- Projets bilatéraux.
+- Relations économiques.
+- Relations culturelles.
+
+## 6.4. Actualités et communiqués
+
+Créer un véritable système de gestion éditoriale.
+
+Fonctionnalités :
+- Publication d'actualités.
+- Publication de communiqués.
+- Avis consulaires.
+- Événements culturels.
+- Fêtes nationales.
+- Images.
+- Catégories.
+- Dates de publication.
+- Gestion des brouillons.
+- Programmation des publications.
+- Traduction des articles.
+
+---
+
+# MODULE 7 : PROMOTION ÉCONOMIQUE, TOURISME ET CULTURE
+
+## 7.1. Investir en RDC
+
+Créer une rubrique destinée aux investisseurs coréens.
+
+Présenter :
+- Secteur minier.
+- Agriculture.
+- Énergies renouvelables.
+- Infrastructures.
+- Technologies numériques.
+- Opportunités économiques.
+- Cadre juridique.
+- Incitations à l'investissement.
+
+Prévoir des fiches sectorielles administrables.
+
+## 7.2. Découvrir la RDC
+
+Créer une présentation attractive du pays.
+
+Contenus :
+- Géographie.
+- Institutions.
+- Provinces.
+- Richesses culturelles.
+- Patrimoine.
+- Parcs nationaux.
+- Tourisme.
+
+## 7.3. Coopération universitaire
+
+- Partenariats universitaires.
+- Programmes d'échanges.
+- Bourses.
+- Appels à candidatures.
+- Conditions de participation.
+- Calendrier des opportunités.
+
+---
+
+# MODULE 8 : CONTACT INTELLIGENT
+
+Créer un système de contact avec orientation automatique.
+
+## 8.1. Catégories
+
+- Visa.
+- Passeport.
+- État civil.
+- Carte consulaire.
+- Assistance.
+- Coopération économique.
+- Presse.
+- Autre.
+
+## 8.2. Fonctionnement
+
+L'utilisateur sélectionne une catégorie.
+
+Le système :
+1. Affiche les informations pertinentes.
+2. Propose les questions fréquentes.
+3. Suggère des réponses.
+4. Permet de soumettre une demande.
+5. Transmet la demande au service correspondant.
+6. Envoie une confirmation.
+
+Prévoir une gestion des demandes entrantes dans le Back-office.
+
+## 8.3. Localisation
+
+Afficher :
+- Adresse officielle.
+- Adresse en anglais.
+- Adresse en coréen.
+- Carte interactive.
+- Accès métro.
+- Accès bus.
+- Informations pratiques.
+- Horaires.
+- Jours fériés.
+
+Prévoir des liens vers les services de cartographie adaptés au contexte coréen, notamment Naver Map et KakaoMap.
+
+---
+
+# MODULE 9 : BACK-OFFICE ADMINISTRATIF
+
+Ce module doit être développé avec autant de rigueur que le portail public.
+
+Il constitue le centre opérationnel de la plateforme.
+
+## 9.1. Authentification et gestion des rôles
+
+Créer un système de gestion des utilisateurs internes.
+
+Rôles à prévoir :
+
+- Super administrateur.
+- Administrateur.
+- Responsable consulaire.
+- Agent consulaire.
+- Responsable communication.
+- Agent administratif.
+- Responsable économique.
+- Responsable assistance.
+
+Les rôles doivent être configurables.
+
+Mettre en place un contrôle d'accès fondé sur les rôles et les permissions.
+
+Un agent ne doit accéder qu'aux informations nécessaires à ses fonctions.
+
+## 9.2. Tableau de bord
+
+Créer un tableau de bord avec :
+
+- Nombre total de demandes.
+- Demandes reçues aujourd'hui.
+- Dossiers en attente.
+- Dossiers en cours.
+- Dossiers clôturés.
+- Demandes de visa.
+- Demandes de passeport.
+- Demandes d'état civil.
+- Rendez-vous à venir.
+- Incidents signalés.
+- Statistiques de traitement.
+
+Prévoir des graphiques :
+- Évolution des demandes.
+- Répartition par catégorie.
+- Répartition par statut.
+- Activité des services.
+- Volume des rendez-vous.
+
+Les données affichées doivent provenir réellement de la base de données.
+
+## 9.3. Gestion des contenus
+
+Créer un CMS interne permettant de gérer :
+- Pages institutionnelles.
+- Actualités.
+- Communiqués.
+- FAQ.
+- Formulaires.
+- Tarifs.
+- Horaires.
+- Documents téléchargeables.
+- Opportunités économiques.
+- Informations universitaires.
+
+Les agents autorisés doivent pouvoir publier sans écrire de code.
+
+## 9.4. Gestion documentaire
+
+Créer une interface permettant :
+- De visualiser les documents autorisés.
+- De télécharger les pièces.
+- De classer les documents.
+- De contrôler les accès.
+- De conserver les versions.
+- De gérer les pièces complémentaires.
+
+Prévoir une politique de conservation et de suppression des documents selon les règles qui seront validées par l'Ambassade.
+
+## 9.5. Journal d'audit
+
+Enregistrer :
+- Connexions.
+- Déconnexions.
+- Modifications.
+- Validations.
+- Refus.
+- Changements de statut.
+- Téléchargements sensibles.
+- Actions administratives importantes.
+
+Conserver l'identité de l'acteur, la date, l'action et la ressource concernée.
+
+---
+
+# MODULE 10 : INTÉGRATION AVEC GESTIONAMBASSA
+
+Le cahier des charges prévoit une connexion avec le système interne GestionAmbassa.
+
+Cette intégration doit être étudiée avant toute implémentation.
+
+Tu dois d'abord identifier :
+- L'existence d'une API.
+- Les mécanismes d'authentification.
+- Les données échangées.
+- Les formats utilisés.
+- Les événements à synchroniser.
+- Les contraintes de sécurité.
+- Les éventuels mécanismes de synchronisation.
+
+Prévoir une architecture d'intégration permettant de transmettre :
+- Pré-demandes de visa.
+- Rendez-vous.
+- Demandes d'assistance.
+
+Ne suppose jamais que GestionAmbassa possède une API ou une documentation disponible.
+
+En l'absence d'informations techniques, développe une couche d'intégration abstraite et documente précisément les éléments à obtenir auprès de l'équipe responsable du système.
+
+Prévoir la gestion des erreurs, des tentatives de synchronisation et des doublons.
+
+---
+
+# PARTIE 5 — ARCHITECTURE TECHNIQUE
+
+Tu dois proposer une architecture professionnelle, modulaire et évolutive.
+
+Ne choisis pas les technologies uniquement parce qu'elles sont populaires.
+
+Évalue les besoins fonctionnels, la maintenabilité, les compétences nécessaires, le coût d'hébergement et les exigences de sécurité.
+
+Présente une architecture argumentée avant de commencer le développement.
+
+L'architecture doit distinguer :
+
+1. Frontend public.
+2. Frontend usager.
+3. Frontend administratif.
+4. Backend.
+5. API.
+6. Base de données.
+7. Stockage documentaire.
+8. Service de notifications.
+9. Génération PDF et QR Codes.
+10. Système de journalisation.
+11. Intégrations externes.
+
+Prévoir une architecture modulaire permettant de faire évoluer chaque composant.
+
+Évite de commencer par des microservices si une architecture monolithique modulaire répond mieux aux besoins initiaux.
+
+## Base de données
+
+Concevoir un modèle relationnel cohérent.
+
+Les principales entités à étudier sont :
+
+- Utilisateurs.
+- Profils.
+- Rôles.
+- Permissions.
+- Demandes.
+- Types de procédures.
+- Catégories de visas.
+- Documents.
+- Pièces justificatives.
+- Rendez-vous.
+- Créneaux.
+- Notifications.
+- Incidents.
+- Actualités.
+- FAQ.
+- Services.
+- Tarifs.
+- Journaux d'audit.
+- Traductions.
+
+Présenter le modèle conceptuel, les relations et les principales contraintes avant de créer les migrations.
+
+## API
+
+Prévoir :
+- Routes organisées par domaine fonctionnel.
+- Authentification sécurisée.
+- Autorisations.
+- Validation.
+- Pagination.
+- Filtrage.
+- Gestion des erreurs.
+- Documentation OpenAPI.
+- Versionnement.
+
+## Sécurité
+
+Appliquer les principes suivants :
+
+- HTTPS obligatoire en production.
+- Protection contre les injections SQL.
+- Protection contre les attaques XSS et CSRF selon l'architecture.
+- Contrôle des permissions côté serveur.
+- Validation des fichiers.
+- Limitation des tentatives de connexion.
+- Protection anti-spam.
+- Chiffrement des données sensibles.
+- Stockage privé des documents.
+- Journalisation.
+- Sauvegardes.
+- Gestion sécurisée des secrets.
+- Politique de session.
+- Protection contre les accès non autorisés.
+
+Ne jamais exposer les documents personnels dans des répertoires publiquement accessibles.
+
+---
+
+# PARTIE 6 — DESIGN ET EXPÉRIENCE UTILISATEUR
+
+Le design doit refléter le caractère officiel d'une représentation diplomatique.
+
+Il doit être :
+- Moderne.
+- Élégant.
+- Institutionnel.
+- Sobre.
+- Accessible.
+- Responsive.
+- Cohérent.
+- Professionnel.
+
+Évite :
+- Les interfaces génériques.
+- Les tableaux de bord surchargés.
+- Les animations excessives.
+- Les couleurs utilisées sans logique.
+- Les boutons disproportionnés.
+- Les formulaires interminables sans progression.
+- Les pages vides.
+- Les composants visuellement incohérents.
+
+Créer un système de design comprenant :
+
+- Palette de couleurs.
+- Typographie.
+- Espacements.
+- Boutons.
+- Cartes.
+- Formulaires.
+- Modales.
+- Tableaux.
+- Notifications.
+- Badges de statut.
+- Menus.
+- Navigation.
+- Composants de chargement.
+- Messages d'erreur.
+
+Prévoir des interfaces différentes pour le portail public et le Back-office, tout en conservant une identité visuelle cohérente.
+
+Avant de développer toutes les pages, présenter les maquettes des écrans essentiels.
+
+---
+
+# PARTIE 7 — PLAN DE DÉVELOPPEMENT OBLIGATOIRE
+
+Tu dois réaliser le projet selon les phases ci-dessous.
+
+NE PAS SAUTER LES PHASES.
+
+## PHASE 0 — AUDIT ET COMPRÉHENSION
+
+Objectif : comprendre intégralement le projet.
+
+Travaux :
+- Analyser le cahier des charges.
+- Identifier les utilisateurs.
+- Identifier les modules.
+- Identifier les fonctionnalités.
+- Identifier les dépendances.
+- Identifier les contraintes.
+- Identifier les informations manquantes.
+- Identifier les intégrations externes.
+- Établir les risques.
+
+Livrables :
+1. Document d'analyse fonctionnelle.
+2. Liste exhaustive des fonctionnalités.
+3. Cartographie des utilisateurs.
+4. Matrice des permissions préliminaire.
+5. Liste des informations à obtenir auprès de l'Ambassade.
+6. Registre des risques.
+7. Proposition de priorisation.
+
+Ne commence pas le développement à cette étape.
+
+Présente les résultats et attends ma validation.
+
+## PHASE 1 — ARCHITECTURE GÉNÉRALE
+
+Objectif : concevoir le fonctionnement global.
+
+Travaux :
+- Architecture applicative.
+- Architecture backend.
+- Architecture frontend.
+- Architecture de la base de données.
+- Architecture de stockage.
+- Architecture de sécurité.
+- Architecture des notifications.
+- Architecture d'intégration.
+
+Livrables :
+1. Diagramme d'architecture.
+2. Diagramme de déploiement.
+3. Diagramme des composants.
+4. Diagramme des flux.
+5. Choix technologiques argumentés.
+6. Structure des dossiers.
+7. Stratégie de développement.
+
+Attends ma validation.
+
+## PHASE 2 — CONCEPTION UX/UI
+
+Objectif : concevoir les interfaces avant leur implémentation complète.
+
+Créer les maquettes de :
+
+Portail public :
+- Accueil.
+- Présentation de l'Ambassade.
+- Services consulaires.
+- Détail d'une procédure.
+- Formulaire de visa.
+- Rendez-vous.
+- Suivi de dossier.
+- Assistance.
+- Actualités.
+- Investissement.
+- Contact.
+
+Espace usager :
+- Connexion.
+- Inscription.
+- Tableau de bord.
+- Mes demandes.
+- Nouvelle demande.
+- Détail d'un dossier.
+- Mes rendez-vous.
+- Notifications.
+- Profil.
+
+Back-office :
+- Connexion.
+- Tableau de bord.
+- Gestion des demandes.
+- Détail d'un dossier.
+- Gestion des rendez-vous.
+- Gestion des incidents.
+- Gestion des utilisateurs.
+- Gestion des contenus.
+- Gestion des documents.
+- Gestion des statistiques.
+
+Livrables :
+- Maquettes.
+- Navigation.
+- Parcours utilisateurs.
+- Système de design.
+- États des composants.
+
+Attends ma validation.
+
+## PHASE 3 — CONCEPTION DE LA BASE DE DONNÉES
+
+Objectif : construire un modèle de données cohérent.
+
+Travaux :
+- Modèle conceptuel.
+- Modèle logique.
+- Modèle physique.
+- Relations.
+- Contraintes.
+- Index.
+- Migrations.
+- Stratégie de sauvegarde.
+
+Livrables :
+- Diagramme ERD.
+- Dictionnaire des données.
+- Schéma relationnel.
+- Migrations initiales.
+
+Attends ma validation.
+
+## PHASE 4 — INITIALISATION DU PROJET
+
+Objectif : construire le socle technique.
+
+Travaux :
+- Initialisation du frontend.
+- Initialisation du backend.
+- Configuration de la base de données.
+- Configuration des environnements.
+- Gestion des variables sensibles.
+- Mise en place de l'authentification.
+- Configuration des rôles.
+- Gestion centralisée des erreurs.
+- Mise en place des tests.
+- Documentation technique.
+
+À la fin :
+- L'application doit démarrer.
+- La connexion à la base doit fonctionner.
+- L'authentification doit fonctionner.
+- La structure du projet doit être propre.
+- Les premiers tests doivent passer.
+
+## PHASE 5 — DÉVELOPPEMENT DU PORTAIL PUBLIC
+
+Développer progressivement :
+
+1. Identité visuelle.
+2. Navigation.
+3. Accueil.
+4. Présentation institutionnelle.
+5. Services consulaires.
+6. Visas.
+7. Actualités.
+8. Relations bilatérales.
+9. Investissement.
+10. Tourisme.
+11. Coopération universitaire.
+12. Contact.
+13. FAQ.
+14. Recherche.
+15. Multilinguisme.
+
+Tester chaque partie.
+
+## PHASE 6 — DÉVELOPPEMENT DE L'ESPACE USAGER
+
+Développer :
+
+1. Inscription.
+2. Connexion.
+3. Gestion du profil.
+4. Pré-demandes de visa.
+5. Enregistrement consulaire.
+6. Demandes de passeport.
+7. Demandes d'état civil.
+8. Téléversement documentaire.
+9. Rendez-vous.
+10. Suivi des dossiers.
+11. Notifications.
+12. Historique.
+
+Chaque fonctionnalité doit être testée avant de passer à la suivante.
+
+## PHASE 7 — DÉVELOPPEMENT DU BACK-OFFICE
+
+Développer :
+
+1. Authentification administrative.
+2. Gestion des rôles.
+3. Tableau de bord.
+4. Gestion des demandes.
+5. Gestion des visas.
+6. Gestion des passeports.
+7. Gestion de l'état civil.
+8. Gestion des rendez-vous.
+9. Gestion des incidents.
+10. Gestion des documents.
+11. Gestion des utilisateurs.
+12. Gestion des actualités.
+13. Gestion des tarifs.
+14. Gestion de la FAQ.
+15. Gestion des statistiques.
+16. Journal d'audit.
+
+Vérifier les permissions de chaque action.
+
+## PHASE 8 — NOTIFICATIONS ET AUTOMATISATIONS
+
+Développer :
+- Notifications par e-mail.
+- Architecture d'envoi SMS.
+- Rappels de rendez-vous.
+- Notifications de changement de statut.
+- Alertes de documents manquants.
+- Génération PDF.
+- Génération QR Code.
+
+Les services externes doivent être configurables.
+
+## PHASE 9 — INTÉGRATION ET INTEROPÉRABILITÉ
+
+Étudier et préparer l'intégration avec GestionAmbassa.
+
+Vérifier :
+- Échanges de données.
+- Authentification.
+- Synchronisation.
+- Gestion des erreurs.
+- Traçabilité.
+- Sécurité.
+- Absence de doublons.
+
+Ne jamais prétendre que l'intégration fonctionne si le système externe n'a pas été réellement connecté et testé.
+
+## PHASE 10 — TESTS ET ASSURANCE QUALITÉ
+
+Effectuer :
+
+Tests unitaires :
+- Services.
+- Validations.
+- Permissions.
+- Règles métier.
+
+Tests d'intégration :
+- API.
+- Base de données.
+- Authentification.
+- Documents.
+- Notifications.
+
+Tests fonctionnels :
+- Pré-demande de visa.
+- Prise de rendez-vous.
+- Suivi de dossier.
+- Gestion des demandes.
+- Gestion des incidents.
+
+Tests de sécurité :
+- Accès non autorisés.
+- Tentatives d'injection.
+- Fichiers dangereux.
+- Gestion des sessions.
+- Permissions.
+
+Tests UX :
+- Mobile.
+- Tablette.
+- Ordinateur.
+- Navigation.
+- Accessibilité.
+- Multilinguisme.
+
+Produire un rapport de tests.
+
+## PHASE 11 — PRÉPARATION AU DÉPLOIEMENT
+
+Préparer :
+- Configuration de production.
+- Variables d'environnement.
+- Serveur.
+- Base de données.
+- HTTPS.
+- Stockage sécurisé.
+- Sauvegardes.
+- Logs.
+- Monitoring.
+- Procédure de restauration.
+- Documentation d'exploitation.
+
+Ne déploie pas sur un environnement institutionnel réel sans autorisation.
+
+---
+
+# PARTIE 8 — MÉTHODE DE COLLABORATION AVEC MOI
+
+Tu dois fonctionner comme un chef de projet technique qui travaille avec un responsable produit.
+
+À chaque phase :
+
+1. Explique ce que tu vas réaliser.
+2. Présente les choix techniques.
+3. Identifie les éléments nécessaires.
+4. Présente les livrables attendus.
+5. Exécute uniquement le travail de la phase autorisée.
+6. Vérifie le résultat.
+7. Présente les éventuels problèmes.
+8. Demande ma validation.
+
+Ne passe jamais automatiquement à la phase suivante.
+
+Lorsque tu dois produire du code :
+- Fournis les fichiers complets nécessaires.
+- Indique précisément leur emplacement.
+- Respecte la structure existante.
+- Explique les commandes nécessaires.
+- Indique les dépendances.
+- Vérifie les imports.
+- Vérifie les migrations.
+- Vérifie les erreurs.
+- Ne supprime pas arbitrairement du code existant.
+
+Si tu travailles directement dans un environnement de développement, inspecte d'abord le projet et ses fichiers avant de modifier quoi que ce soit.
+
+Ne réécris pas toute l'application lorsqu'une modification ciblée suffit.
+
+Si tu rencontres une ambiguïté importante, pose une question précise au lieu de prendre une décision qui pourrait compromettre l'architecture.
+
+---
+
+# PARTIE 9 — CRITÈRES DE QUALITÉ ET DE VALIDATION
+
+Une fonctionnalité ne peut être considérée comme terminée que si :
+
+- Son interface existe.
+- Son fonctionnement est opérationnel.
+- Les données sont correctement enregistrées.
+- Les validations fonctionnent.
+- Les permissions sont respectées.
+- Les erreurs sont correctement gérées.
+- Les tests nécessaires passent.
+- La documentation est mise à jour.
+
+Ne considère jamais une simple maquette comme une fonctionnalité terminée.
+
+Ne considère jamais des données fictives comme des données réelles.
+
+Ne considère jamais un bouton sans action comme une fonctionnalité opérationnelle.
+
+Ne considère jamais une page qui affiche des informations statiques comme un système de gestion fonctionnel.
+
+---
+
+# PARTIE 10 — PREMIÈRE MISSION À EXÉCUTER
+
+Tu dois maintenant commencer exclusivement par la PHASE 0 : AUDIT ET COMPRÉHENSION DU PROJET.
+
+Ne génère pas encore de code.
+
+Ne crée pas encore les interfaces.
+
+Ne commence pas directement par le frontend.
+
+Je veux d'abord que tu analyses l'ensemble du projet et que tu produises un véritable dossier de conception initial.
+
+Ce dossier doit comprendre :
+
+1. Résumé exécutif du projet.
+2. Objectifs généraux et spécifiques.
+3. Analyse fonctionnelle détaillée.
+4. Présentation des trois espaces.
+5. Cartographie des utilisateurs.
+6. Inventaire exhaustif des modules.
+7. Inventaire des fonctionnalités.
+8. Parcours utilisateurs.
+9. Règles métier principales.
+10. Matrice des rôles et permissions.
+11. Liste des entités métier.
+12. Dépendances entre les modules.
+13. Risques techniques et fonctionnels.
+14. Informations à obtenir auprès de l'Ambassade.
+15. Proposition de découpage en versions.
+16. Estimation de la complexité relative des modules.
+17. Proposition de critères d'acceptation.
+
+Présente le résultat dans un document structuré, détaillé et professionnel.
+
+À la fin, donne-moi :
+- Les éléments qui sont suffisamment définis.
+- Les éléments qui nécessitent une clarification.
+- Les décisions que tu proposes.
+- Les prochaines étapes.
+
+**IMPORTANT : ARRÊTE-TOI À LA FIN DE LA PHASE 0. ATTENDS MON AUTORISATION EXPLICITE AVANT DE COMMENCER LA PHASE 1.**
+
+Tu dois privilégier la profondeur de l'analyse à la rapidité d'exécution.
+
+L'objectif est de construire une plateforme réellement exploitable par l'Ambassade, et non une simple démonstration visuelle.
