@@ -30,16 +30,23 @@ Remplacer par vos URLs réelles :
 
 Si vous n’utilisez pas la base Blueprint : créer une DB Postgres (Neon OK) et coller `DATABASE_URL`.
 
-### Seed (une fois l’API up)
+### Migrations + seed (obligatoire au premier déploiement)
 
-Shell Render du service → :
+Dans **Render → Shell** du service web :
 
 ```bash
+python manage.py migrate --noinput
 python manage.py seed_public_content
 python manage.py seed_staff
 ```
 
+Ou : `bash scripts/render_release.sh`
+
+Sans `migrate`, l’inscription et les listes API renvoient « Erreur serveur temporaire » (tables absentes).
+
 Comptes seed : voir `README.md` (à changer après le test).
+
+Diag temporaire (à retirer ensuite) : `EXPOSE_ERROR_DETAILS=True` dans les env Render.
 
 ## 2. Front sur Netlify
 

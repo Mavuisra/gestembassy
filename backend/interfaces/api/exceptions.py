@@ -2,12 +2,17 @@
 
 from __future__ import annotations
 
+import logging
+import os
+
 from django.conf import settings
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
 
 from application.use_cases import ValidationError
+
+logger = logging.getLogger(__name__)
 
 
 def api_exception_handler(exc, context):
@@ -43,6 +48,10 @@ def api_exception_handler(exc, context):
         return response
 
     # Erreurs non gérées (ex. migration manquante) → enveloppe JSON, pas HTML.
+    logger.exception("Unhandled API error: %s", exc)
+    expose_details = settings.DEBUG or os.getenv(
+        "EXPOSE_ERROR_DETAILS", "False"
+    ).lower() in {"1", "true", "yes"}
     return Response(
         {
             "success": False,
@@ -53,7 +62,7 @@ def api_exception_handler(exc, context):
                     "si le problème persiste, contactez l'administrateur."
                 ),
                 "code": "server_error",
-                **({"details": str(exc)} if settings.DEBUG else {}),
+                **({"details": f"{type(exc).__name__}: {exc}"} if expose_details else {}),
             },
         },
         status=status.HTTP_500_INTERNAL_SERVER_ERROR,
