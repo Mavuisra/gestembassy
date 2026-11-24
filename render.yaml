@@ -8,8 +8,8 @@ services:
     plan: free
     rootDir: backend
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    # SQLite : 1 worker (évite les locks). verify_db échoue si tables absentes après migrate/seed.
-    # Ne PAS définir DATABASE_URL sur Render (sinon Postgres mort/vide → /news/ en 503).
+    # SQLite : 1 worker. wsgi.py re-bootstrap si tables manquantes (startCommand dashboard obsolète).
+    # Ne PAS définir DATABASE_URL. Si le Start Command UI diffère, coller la ligne ci-dessous.
     startCommand: python manage.py migrate --noinput && python manage.py seed_public_content && python manage.py seed_staff && python manage.py verify_db && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120
     healthCheckPath: /api/v1/health/
     envVars:

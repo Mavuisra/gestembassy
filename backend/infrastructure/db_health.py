@@ -20,9 +20,11 @@ class DatabaseHealth:
             "status": "ok" if self.ok else "error",
             "engine": self.engine,
         }
-        if not self.ok and expose_details:
+        if not self.ok:
+            # error_type toujours utile en ops (pas de secret)
             payload["error_type"] = self.error_type
-            payload["error_message"] = self.error_message
+            if expose_details:
+                payload["error_message"] = self.error_message
         return payload
 
 
