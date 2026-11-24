@@ -147,12 +147,22 @@ if DATABASE_URL.startswith("postgres"):
     DATABASES = {"default": db_config}
 else:
     # Déploiement test Render : SQLite si DATABASE_URL absent
+    # SQLITE_PATH optionnel (ex. disque persistant Render) — sinon BASE_DIR/db.sqlite3
+    _sqlite_path = os.getenv("SQLITE_PATH", "").strip()
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "NAME": Path(_sqlite_path) if _sqlite_path else BASE_DIR / "db.sqlite3",
         }
     }
+    if IS_PRODUCTION and DATABASE_URL:
+        # DATABASE_URL non-postgres (typo / mauvaise valeur) → SQLite, mais on journalise
+        import logging
+
+        logging.getLogger(__name__).warning(
+            "DATABASE_URL est défini mais n'est pas postgres — fallback SQLite. "
+            "Sur Render, supprimez DATABASE_URL pour éviter les 503 /news/."
+        )
 
 # ---------------------------------------------------------------------------
 # Auth / mots de passe

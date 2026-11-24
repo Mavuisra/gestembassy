@@ -6,13 +6,15 @@ Chaque vue délègue à un cas d'usage (Clean Architecture).
 
 from __future__ import annotations
 
+import os
+
+from django.conf import settings
 from drf_spectacular.utils import OpenApiParameter, extend_schema
 from rest_framework import status
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.throttling import AnonRateThrottle, UserRateThrottle
 from rest_framework.views import APIView
-
-from rest_framework.permissions import IsAuthenticated
 
 from application.use_cases import (
     AttachVisaDocument,
@@ -56,6 +58,7 @@ from domain.entities import (
     VisaDocumentUploadCommand,
     VisaPreApplicationCommand,
 )
+from infrastructure.db_health import check_database
 from infrastructure.repositories import (
     DjangoAccountRepository,
     DjangoAppointmentRepository,
@@ -122,14 +125,40 @@ class VisaPreApplicationThrottle(UserRateThrottle):
 
 
 class HealthView(APIView):
-    """Santé de l'API — monitoring basique."""
+    """Santé de l'API — liveness + readiness DB (évite un health vert avec /news/ en 500)."""
 
     authentication_classes: list = []
     permission_classes: list = []
 
     @extend_schema(tags=["Système"], summary="Healthcheck")
     def get(self, request):
-        return ok({"status": "ok", "service": "ambadrcor-api", "version": "0.1.0"})
+        # deep=1 (défaut) vérifie les tables ; deep=0 = simple liveness process
+        deep = request.query_params.get("deep", "1").lower() not in {"0", "false", "no"}
+        db = check_database(require_public_content=deep)
+        expose = settings.DEBUG or os.getenv("EXPOSE_ERROR_DETAILS", "False").lower() in {
+            "1",
+            "true",
+            "yes",
+        }
+        payload = {
+            "status": "ok" if db.ok else "degraded",
+            "service": "ambadrcor-api",
+            "version": "0.1.0",
+            "database": db.as_dict(expose_details=expose),
+        }
+        if not db.ok:
+            return Response(
+                {
+                    "success": False,
+                    "data": payload,
+                    "error": {
+                        "message": "Base de données indisponible.",
+                        "code": "database_unavailable",
+                    },
+                },
+                status=status.HTTP_503_SERVICE_UNAVAILABLE,
+            )
+        return ok(payload)
 
 
 class NewsListView(APIView):

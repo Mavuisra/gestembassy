@@ -6,6 +6,7 @@ import logging
 import os
 
 from django.conf import settings
+from django.db.utils import DatabaseError, OperationalError
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import exception_handler
@@ -54,6 +55,25 @@ def api_exception_handler(exc, context):
         "true",
         "yes",
     }
+
+    # Cas ops fréquent (Render) : health OK mais /news/ en 500 faute de tables / DATABASE_URL
+    if isinstance(exc, (OperationalError, DatabaseError)):
+        return Response(
+            {
+                "success": False,
+                "data": None,
+                "error": {
+                    "message": (
+                        "Base de données indisponible ou schéma incomplet. "
+                        "Vérifiez migrate/seed et l'absence de DATABASE_URL invalide."
+                    ),
+                    "code": "database_unavailable",
+                    **({"details": f"{type(exc).__name__}: {exc}"} if expose_details else {}),
+                },
+            },
+            status=status.HTTP_503_SERVICE_UNAVAILABLE,
+        )
+
     return Response(
         {
             "success": False,

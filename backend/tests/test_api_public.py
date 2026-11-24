@@ -16,6 +16,33 @@ def test_health():
     assert response.status_code == 200
     assert response.json()["success"] is True
     assert response.json()["data"]["status"] == "ok"
+    assert response.json()["data"]["database"]["status"] == "ok"
+
+
+@pytest.mark.django_db
+def test_health_liveness_without_deep_db_check():
+    client = APIClient()
+    response = client.get("/api/v1/health/?deep=0")
+    assert response.status_code == 200
+    assert response.json()["data"]["database"]["status"] == "ok"
+
+
+@pytest.mark.django_db
+def test_news_database_error_returns_503(monkeypatch):
+    from django.db.utils import OperationalError
+
+    from infrastructure import repositories as repos
+
+    def _boom(self, *, limit: int = 20):
+        raise OperationalError("no such table: public_content_newsarticle")
+
+    monkeypatch.setattr(repos.DjangoNewsRepository, "list_published", _boom)
+    client = APIClient()
+    response = client.get("/api/v1/news/?limit=3&locale=fr")
+    assert response.status_code == 503
+    body = response.json()
+    assert body["success"] is False
+    assert body["error"]["code"] == "database_unavailable"
 
 
 @pytest.mark.django_db

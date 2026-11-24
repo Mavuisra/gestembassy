@@ -8,7 +8,9 @@ services:
     plan: free
     rootDir: backend
     buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: python manage.py migrate --noinput && python manage.py seed_public_content && python manage.py seed_staff && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    # SQLite : 1 worker (évite les locks). verify_db échoue si tables absentes après migrate/seed.
+    # Ne PAS définir DATABASE_URL sur Render (sinon Postgres mort/vide → /news/ en 503).
+    startCommand: python manage.py migrate --noinput && python manage.py seed_public_content && python manage.py seed_staff && python manage.py verify_db && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 1 --timeout 120
     healthCheckPath: /api/v1/health/
     envVars:
       - key: PYTHON_VERSION

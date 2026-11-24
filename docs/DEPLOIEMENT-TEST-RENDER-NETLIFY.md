@@ -29,8 +29,14 @@ Remplacer par vos URLs réelles :
 | `PUBLIC_APP_URL` | `https://drcembassyseoul.netlify.app` |
 
 **Supprimer `DATABASE_URL`** dans l’Environment Render (sinon Django tente Postgres).
+Si `DATABASE_URL` pointe vers une base morte/vide, `/api/v1/health/` et `/api/v1/news/`
+renvoient **503** `database_unavailable` (plus un faux positif health vert).
 
-Le `startCommand` lance déjà `migrate` + `seed_public_content` + `seed_staff`.
+Le `startCommand` lance `migrate` + `seed_public_content` + `seed_staff` + `verify_db`
+(échec explicite si les tables publiques manquent), puis Gunicorn **1 worker** (SQLite).
+
+Diagnostic rapide : `GET /api/v1/health/` (champ `database`) ou
+`EXPOSE_ERROR_DETAILS=true` temporairement sur Render.
 
 Comptes seed : voir `README.md` (à changer après le test).
 
