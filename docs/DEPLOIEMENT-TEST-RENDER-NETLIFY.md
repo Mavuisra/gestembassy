@@ -6,7 +6,7 @@ Objectif : démo courte, pas une prod institutionnelle.
 
 - Repo GitHub : `https://github.com/Mavuisra/gestembassy`
 - Compte [Render](https://render.com) + [Netlify](https://netlify.com)
-- Postgres Render free (1 DB / workspace, expire ~30 jours) **ou** [Neon](https://neon.tech) / Supabase → coller `DATABASE_URL`
+- Base : **SQLite** (pas de Postgres pour ce test). Sur Render free, les données sont éphémères (reset au cold start / redeploy).
 
 ## 1. API sur Render
 
@@ -28,25 +28,11 @@ Remplacer par vos URLs réelles :
 | `CSRF_TRUSTED_ORIGINS` | `https://drcembassyseoul.netlify.app` |
 | `PUBLIC_APP_URL` | `https://drcembassyseoul.netlify.app` |
 
-Si vous n’utilisez pas la base Blueprint : créer une DB Postgres (Neon OK) et coller `DATABASE_URL`.
+**Supprimer `DATABASE_URL`** dans l’Environment Render (sinon Django tente Postgres).
 
-### Migrations + seed (obligatoire après 1er deploy)
-
-Si `/api/v1/news/` ou le login back-office renvoient **500**, les tables Postgres manquent souvent.
-
-Shell Render du service → :
-
-```bash
-python manage.py migrate --noinput
-python manage.py seed_public_content
-python manage.py seed_staff
-```
-
-Vérifier ensuite : `https://gestembassy.onrender.com/api/v1/health/` puis `/api/v1/news/`.
+Le `startCommand` lance déjà `migrate` + `seed_public_content` + `seed_staff`.
 
 Comptes seed : voir `README.md` (à changer après le test).
-
-Variable utile le temps du debug : `EXPOSE_ERROR_DETAILS=True` (détail du 500 dans le JSON).
 
 ## 2. Front sur Netlify
 
@@ -72,6 +58,5 @@ Sinon, sans proxy : variable Netlify `VITE_API_BASE=https://VOTRE-API.onrender.c
 ## Limites du test
 
 - Cold start Render free (~30–60 s au réveil)
-- Disque éphémère : uploads media non persistants
+- SQLite + disque éphémère : données / media perdus à chaque redémarrage
 - E-mail en console (pas d’SMTP réel)
-- Postgres free Render expire après ~30 jours → Neon en secours

@@ -1,9 +1,5 @@
-# Blueprint Render — API Django (test)
-# Après création du service : renseigner CORS / CSRF / PUBLIC_APP_URL avec l’URL Netlify.
-
-databases:
-  - name: gestembassy-db
-    plan: free
+# Blueprint Render — API Django (test) avec SQLite
+# Pas de Postgres : supprimer DATABASE_URL dans l’Environment Render s’il existe.
 
 services:
   - type: web
@@ -11,8 +7,8 @@ services:
     runtime: python
     plan: free
     rootDir: backend
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput
-    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
+    startCommand: python manage.py migrate --noinput && python manage.py seed_public_content && python manage.py seed_staff && gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
     healthCheckPath: /api/v1/health/
     envVars:
       - key: PYTHON_VERSION
@@ -23,18 +19,14 @@ services:
         value: "False"
       - key: DJANGO_SECRET_KEY
         generateValue: true
-      - key: DATABASE_URL
-        fromDatabase:
-          name: gestembassy-db
-          property: connectionString
       - key: DJANGO_ALLOWED_HOSTS
-        sync: false
+        value: gestembassy.onrender.com
       - key: CORS_ALLOWED_ORIGINS
-        sync: false
+        value: https://drcembassyseoul.netlify.app
       - key: CSRF_TRUSTED_ORIGINS
-        sync: false
+        value: https://drcembassyseoul.netlify.app
       - key: PUBLIC_APP_URL
-        sync: false
+        value: https://drcembassyseoul.netlify.app
       - key: EXPOSE_API_DOCS
         value: "False"
       - key: NOTIFICATION_CHANNELS

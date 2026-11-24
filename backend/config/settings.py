@@ -11,7 +11,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
-from urllib.parse import parse_qs, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 from django.core.exceptions import ImproperlyConfigured
 from dotenv import load_dotenv
@@ -130,24 +130,23 @@ if DATABASE_URL.startswith("postgres"):
     parsed = urlparse(DATABASE_URL)
     qs = parse_qs(parsed.query)
     sslmode = (qs.get("sslmode") or [None])[0]
-    if not sslmode and IS_PRODUCTION:
+    host = parsed.hostname or ""
+    # SSL pour hôtes externes uniquement (ex. *.render.com) ; pas le host interne Render
+    if not sslmode and IS_PRODUCTION and "." in host:
         sslmode = "require"
     db_config: dict = {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": parsed.path.lstrip("/"),
-        "USER": parsed.username or "",
-        "PASSWORD": parsed.password or "",
-        "HOST": parsed.hostname or "",
+        "NAME": unquote(parsed.path.lstrip("/")),
+        "USER": unquote(parsed.username or ""),
+        "PASSWORD": unquote(parsed.password or ""),
+        "HOST": host,
         "PORT": str(parsed.port or 5432),
     }
     if sslmode:
         db_config["OPTIONS"] = {"sslmode": sslmode}
     DATABASES = {"default": db_config}
-elif IS_PRODUCTION:
-    raise ImproperlyConfigured(
-        "DATABASE_URL PostgreSQL est obligatoire en production (sqlite interdit)."
-    )
 else:
+    # Déploiement test Render : SQLite si DATABASE_URL absent
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",

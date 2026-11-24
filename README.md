@@ -54,7 +54,7 @@ pytest
 
 Guide pas à pas : [`docs/DEPLOIEMENT-TEST-RENDER-NETLIFY.md`](docs/DEPLOIEMENT-TEST-RENDER-NETLIFY.md)
 
-- **API** : Render (`render.yaml`) + Postgres (`DATABASE_URL`)
+- **API** : Render (`render.yaml`) + **SQLite** (pas de `DATABASE_URL`)
 - **Front** : Netlify (`netlify.toml`, proxy `/api/*` → Render)
 
 ## Phase actuelle
