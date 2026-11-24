@@ -1,0 +1,3 @@
+/api/*  https://gestembassy.onrender.com/api/:splat  200
+/*    /index.html   200
+

@@ -50,8 +50,15 @@ cd backend
 pytest
 ```
 
+## Déploiement test (Render + Netlify)
+
+Guide pas à pas : [`docs/DEPLOIEMENT-TEST-RENDER-NETLIFY.md`](docs/DEPLOIEMENT-TEST-RENDER-NETLIFY.md)
+
+- **API** : Render (`render.yaml`) + Postgres (`DATABASE_URL`)
+- **Front** : Netlify (`netlify.toml`, proxy `/api/*` → Render)
+
 ## Phase actuelle
 
-PHASE 5–6 (portail + espace usager) et PHASE 7 (back-office agents : demandes, RDV, incidents, contenu, stats, audit).
+PHASE 5–6 (portail + espace usager) et PHASE 7 (back-office agents : demandes, RDV, incidents, contenu, stats, audit). PHASE 8 (notifications).
 
 Contenus marqués **[PROVISOIRE]** en attendant validation institutionnelle.

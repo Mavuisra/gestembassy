@@ -1,0 +1,26 @@
+# Frontend React (SPA) — Netlify
+# Base directory dans l’UI Netlify : frontend
+# Ou laisser ce fichier à la racine et utiliser [build] ci-dessous.
+
+[build]
+  base = "frontend"
+  command = "npm run build"
+  publish = "dist"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# Remplacer l’URL Render après le premier déploiement API.
+# Sans proxy : définir VITE_API_BASE=https://VOTRE-API.onrender.com/api/v1 dans l’UI Netlify.
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://gestembassy.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+# SPA fallback (React Router)
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

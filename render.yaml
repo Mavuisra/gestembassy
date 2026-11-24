@@ -1,0 +1,45 @@
+# Blueprint Render — API Django (test)
+# Après création du service : renseigner CORS / CSRF / PUBLIC_APP_URL avec l’URL Netlify.
+
+databases:
+  - name: gestembassy-db
+    plan: free
+
+services:
+  - type: web
+    name: gestembassy-api
+    runtime: python
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput && python manage.py migrate --noinput
+    startCommand: gunicorn config.wsgi:application --bind 0.0.0.0:$PORT --workers 2 --timeout 120
+    healthCheckPath: /api/v1/health/
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.12.8"
+      - key: DJANGO_ENV
+        value: production
+      - key: DJANGO_DEBUG
+        value: "False"
+      - key: DJANGO_SECRET_KEY
+        generateValue: true
+      - key: DATABASE_URL
+        fromDatabase:
+          name: gestembassy-db
+          property: connectionString
+      - key: DJANGO_ALLOWED_HOSTS
+        sync: false
+      - key: CORS_ALLOWED_ORIGINS
+        sync: false
+      - key: CSRF_TRUSTED_ORIGINS
+        sync: false
+      - key: PUBLIC_APP_URL
+        sync: false
+      - key: EXPOSE_API_DOCS
+        value: "False"
+      - key: NOTIFICATION_CHANNELS
+        value: in_app,email
+      - key: NOTIFICATIONS_EMAIL_ENABLED
+        value: "true"
+      - key: EMAIL_BACKEND
+        value: django.core.mail.backends.console.EmailBackend
