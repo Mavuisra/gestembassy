@@ -30,9 +30,11 @@ Remplacer par vos URLs réelles :
 
 Si vous n’utilisez pas la base Blueprint : créer une DB Postgres (Neon OK) et coller `DATABASE_URL`.
 
-### Migrations + seed (obligatoire au premier déploiement)
+### Migrations + seed (obligatoire après 1er deploy)
 
-Dans **Render → Shell** du service web :
+Si `/api/v1/news/` ou le login back-office renvoient **500**, les tables Postgres manquent souvent.
+
+Shell Render du service → :
 
 ```bash
 python manage.py migrate --noinput
@@ -40,13 +42,11 @@ python manage.py seed_public_content
 python manage.py seed_staff
 ```
 
-Ou : `bash scripts/render_release.sh`
-
-Sans `migrate`, l’inscription et les listes API renvoient « Erreur serveur temporaire » (tables absentes).
+Vérifier ensuite : `https://gestembassy.onrender.com/api/v1/health/` puis `/api/v1/news/`.
 
 Comptes seed : voir `README.md` (à changer après le test).
 
-Diag temporaire (à retirer ensuite) : `EXPOSE_ERROR_DETAILS=True` dans les env Render.
+Variable utile le temps du debug : `EXPOSE_ERROR_DETAILS=True` (détail du 500 dans le JSON).
 
 ## 2. Front sur Netlify
 

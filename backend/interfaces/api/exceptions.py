@@ -48,10 +48,12 @@ def api_exception_handler(exc, context):
         return response
 
     # Erreurs non gérées (ex. migration manquante) → enveloppe JSON, pas HTML.
-    logger.exception("Unhandled API error: %s", exc)
-    expose_details = settings.DEBUG or os.getenv(
-        "EXPOSE_ERROR_DETAILS", "False"
-    ).lower() in {"1", "true", "yes"}
+    logger.exception("Unhandled API exception in %s", context.get("view"))
+    expose_details = settings.DEBUG or os.getenv("EXPOSE_ERROR_DETAILS", "False").lower() in {
+        "1",
+        "true",
+        "yes",
+    }
     return Response(
         {
             "success": False,

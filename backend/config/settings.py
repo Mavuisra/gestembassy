@@ -52,6 +52,11 @@ ALLOWED_HOSTS = [
     if host.strip()
 ]
 
+# Render injecte automatiquement le hostname du service
+_render_host = os.getenv("RENDER_EXTERNAL_HOSTNAME", "").strip()
+if _render_host and _render_host not in ALLOWED_HOSTS:
+    ALLOWED_HOSTS.append(_render_host)
+
 if IS_PRODUCTION and (not ALLOWED_HOSTS or ALLOWED_HOSTS == ["localhost", "127.0.0.1"]):
     raise ImproperlyConfigured(
         "DJANGO_ALLOWED_HOSTS doit contenir les hôtes de production."
