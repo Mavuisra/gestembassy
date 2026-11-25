@@ -3,9 +3,11 @@
 from __future__ import annotations
 
 import pytest
+from django.contrib.auth.models import User
 from django.core.management import call_command
 from django.db import connections
 
+from apps.accounts.models import StaffProfile
 from apps.public_content.models import NewsArticle
 from infrastructure.bootstrap_db import ensure_database_ready
 
@@ -42,3 +44,22 @@ def test_ensure_database_ready_recreates_missing_news_table(file_sqlite):
 
     assert NewsArticle.objects.filter(is_published=True).exists()
     assert NewsArticle.objects.filter(is_published=True).count() >= 1
+    assert User.objects.filter(username="admin", is_superuser=True).exists()
+    assert User.objects.filter(username="agent@ambadrcor.local", is_staff=True).exists()
+
+
+@pytest.mark.django_db(transaction=True)
+def test_ensure_database_ready_reaffirms_admin_when_schema_ok(file_sqlite):
+    User.objects.filter(username="admin").delete()
+    User.objects.filter(username="agent@ambadrcor.local").delete()
+    assert not User.objects.filter(username="admin").exists()
+
+    ensure_database_ready()
+
+    admin = User.objects.get(username="admin")
+    assert admin.is_superuser and admin.is_staff
+    assert admin.check_password("AdminChangeMe!2026")
+    agent = User.objects.get(username="agent@ambadrcor.local")
+    assert agent.is_staff and agent.check_password("AgentChangeMe!2026")
+    assert StaffProfile.objects.filter(user=admin, role=StaffProfile.Role.ADMIN).exists()
+    assert StaffProfile.objects.filter(user=agent, role=StaffProfile.Role.ADMIN).exists()

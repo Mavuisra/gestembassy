@@ -34,14 +34,22 @@ def _reset_sqlite_file() -> None:
     logger.warning("Fichier SQLite recréé après schéma incomplet : %s", path)
 
 
+def _ensure_demo_accounts() -> None:
+    """Réaffirme admin + agent à chaque boot (SQLite éphémère / redeploy)."""
+    call_command("seed_staff", verbosity=0)
+
+
 def ensure_database_ready() -> None:
     """
-    Garantit migrate + seed si les tables publiques manquent.
+    Garantit migrate + seed si les tables publiques manquent,
+    et réaffirme toujours les comptes admin/agent de démo.
 
     Cas constaté en prod : connexion SQLite OK (SELECT 1) mais
     public_content_newsarticle absent → /news/ en 503.
     """
     if check_database(require_public_content=True).ok:
+        _ensure_demo_accounts()
+        logger.info("Bootstrap DB : schéma OK, comptes démo réaffirmés")
         return
 
     logger.warning("Base incomplète — bootstrap migrate/seed")
@@ -58,7 +66,7 @@ def ensure_database_ready() -> None:
         call_command("migrate", interactive=False, verbosity=0)
 
     call_command("seed_public_content", verbosity=0)
-    call_command("seed_staff", verbosity=0)
+    _ensure_demo_accounts()
 
     health = check_database(require_public_content=True)
     if not health.ok:

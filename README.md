@@ -117,11 +117,14 @@ Laisse cette fenêtre ouverte. L’API tourne sur :
 | http://127.0.0.1:8000/admin/ | Admin Django |
 | http://127.0.0.1:8000/api/v1/health/ | Santé (doit répondre OK) |
 
-**Comptes de démo (à changer hors local)**
+**Comptes de démo (recréés à chaque démarrage / redeploy Render)**
 
-| Usage | Identifiant | Mot de passe |
-|-------|-------------|--------------|
-| Agent back-office | `agent@ambadrcor.local` | `AgentChangeMe!2026` |
+| Usage | Identifiant | Mot de passe | URL |
+|-------|-------------|--------------|-----|
+| Admin Django | `admin` | `AdminChangeMe!2026` | `/admin/` |
+| Agent back-office | `agent@ambadrcor.local` | `AgentChangeMe!2026` | `/backoffice/login` |
+
+> Sur Render (SQLite éphémère), le bootstrap WSGI réexécute `seed_staff` à **chaque** démarrage : ces identifiants restent toujours disponibles pour la démo. Les comptes usagers créés en ligne ne sont **pas** persistants sans base durable.
 
 ---
 
@@ -220,6 +223,16 @@ npm run preview   # prévisualiser le build
 
 Pour mettre en ligne (API sur Render, site sur Netlify) :  
 [`docs/DEPLOIEMENT-TEST-RENDER-NETLIFY.md`](docs/DEPLOIEMENT-TEST-RENDER-NETLIFY.md)
+
+**Démo en ligne**
+
+| Service | URL |
+|---------|-----|
+| Site (Netlify) | https://drcembassyseoul.netlify.app/ |
+| API (Render) | https://gestembassy.onrender.com/api/v1/health/ |
+| Back-office | https://drcembassyseoul.netlify.app/backoffice/login |
+
+Identifiants démo : voir le tableau **Comptes de démo** ci-dessus (`admin` / `agent@ambadrcor.local`).
 
 ---
 

@@ -38,7 +38,13 @@ Le `startCommand` lance `migrate` + `seed_public_content` + `seed_staff` + `veri
 Diagnostic rapide : `GET /api/v1/health/` (champ `database`) ou
 `EXPOSE_ERROR_DETAILS=true` temporairement sur Render.
 
-Comptes seed : voir `README.md` (à changer après le test).
+`seed_staff` est **réaffirmé à chaque démarrage** (bootstrap WSGI) : admin + agent restent
+disponibles même après reset SQLite.
+
+| Usage | Identifiant | Mot de passe |
+|-------|-------------|--------------|
+| Admin Django | `admin` | `AdminChangeMe!2026` |
+| Agent back-office | `agent@ambadrcor.local` | `AgentChangeMe!2026` |
 
 ## 2. Front sur Netlify
 
